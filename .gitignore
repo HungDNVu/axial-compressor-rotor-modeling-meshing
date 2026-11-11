@@ -1,0 +1,23 @@
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Visual Studio
+.vs/
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# Excel temporary files
+~$*.xlsx
+
+# System files
+.DS_Store
+Thumbs.db
