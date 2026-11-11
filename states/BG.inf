@@ -1,0 +1,14 @@
+!======  ANSYS BladeGen Export  ========
+Axis of Rotation: Z
+Number of Blade Sets: 24
+Number of Blades Per Set: 1
+Blade Loft Direction: Streamwise
+Geometry Units: MM
+Coordinate System Orientation: Righthanded
+Surface Construction: General
+Blade 0 LE: EllipseEnd
+Blade 0 TE: CutOffEnd
+Hub Data File: BG_hub.curve
+Shroud Data File: BG_shroud.curve
+Profile Data File: BG_profile.curve
+Blade 0 Shroud Tip Profile: 0
