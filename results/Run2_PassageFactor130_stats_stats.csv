@@ -1,0 +1,10 @@
+All Domains
+Mesh Measure,Value,% Bad,% ok,%OK
+Connectivity Number,10.0,0.0,0.0458328,99.95417
+Edge Length Ratio,137.487,0.0,0.0,100.0
+Element Volume Ratio,3.70987,0.0,0.0,100.0
+Maximum Face Angle,2.52614 [rad],0.0,0.0,100.0
+Minimum Face Angle,0.614018 [rad],0.0,0.0,100.0
+Minimum Volume,2.89777e-07 [cm^3],0.0,0.0,100.0
+Orthogonality Angle,0.669794 [rad],0.0,0.297913,99.70208
+Skewness,0.609138,0.0,0.0,100.0
