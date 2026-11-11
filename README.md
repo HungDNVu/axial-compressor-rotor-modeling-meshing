@@ -106,6 +106,47 @@ Workflow:
 
 The scripts are located in `scripts/`, and the exported CSV files are stored in `results/`.
 
+### Reproducing the Mesh Statistics
+
+#### Requirements
+
+- ANSYS TurboGrid 2026 R1
+- Python 3.11
+- PyTurboGrid
+- A compatible ANSYS license
+
+#### Installation
+
+Clone or download this repository and open a terminal in the project root directory.
+
+Install the required Python package:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+#### Running the Analysis
+
+Run the mesh statistics extraction script:
+
+```powershell
+python scripts/export_stats.py
+```
+
+The script automatically:
+
+1. Loads all TurboGrid `.tst` state files from `states/`.
+2. Generates the mesh for each configuration.
+3. Extracts mesh quality statistics.
+4. Exports the results as CSV files to `results/`.
+
+#### Notes
+
+- ANSYS TurboGrid must be installed locally.
+- Geometry references may need to be relinked when running on another computer.
+- The exported data can be compared using the Excel workbook in `results/`.
+```
+
 ## 8. Repository Structure
 
 - `geometry/`: BladeGen geometry
