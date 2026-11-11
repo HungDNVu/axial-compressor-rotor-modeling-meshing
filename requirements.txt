@@ -1,1 +1,1 @@
-ansys-turbogrid-core
+ansys-turbogrid-core==0.9.4
