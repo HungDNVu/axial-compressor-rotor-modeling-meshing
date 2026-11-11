@@ -160,3 +160,6 @@ The script automatically:
 The study focuses on geometric mesh quality and meshing parameter sensitivity.
 
 No CFD flow solution, aerodynamic performance evaluation, or mesh-independence verification has been performed.
+## Technical Report
+
+[Download Technical Report (PDF)](report/Axial_Compressor_Rotor_technical_report.pdf)
