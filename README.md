@@ -1,34 +1,47 @@
+
 # Axial Compressor Rotor Modeling & Meshing
 
-**Structured blade-passage meshing and geometric mesh-quality assessment using ANSYS BladeGen, TurboGrid, and Python.**
+**Structured Blade-Passage Meshing and Geometric Mesh-Quality Assessment Using ANSYS BladeGen, TurboGrid, and Python**
 
-This educational project develops an axial compressor rotor blade geometry, generates a structured hexahedral mesh for one periodic blade passage, and compares five meshing configurations. The study focuses on mesh geometry and quality metrics; **no CFD flow solution or mesh-independence study is claimed**.
+This educational project develops an axial compressor rotor blade geometry, generates a structured hexahedral mesh for a single periodic blade passage, and evaluates five meshing configurations.
+
+The study focuses on geometric mesh quality, meshing parameter sensitivity, and automated statistical data extraction.
+
+**Scope:** Geometry modeling and mesh-quality optimization. No CFD flow solution or mesh-independence study is claimed.
+
+---
 
 ## 1. Project Overview
 
-The workflow consists of four stages:
+The workflow consists of four main stages:
 
-1. **Geometry modeling:** Define the meridional flow path, blade-angle distribution, and thickness distribution in ANSYS BladeGen.
-2. **Mesh generation:** Transfer the blade geometry to ANSYS TurboGrid and generate a structured mesh for one blade passage using automatic topology and meshing (ATM).
-3. **Quality assessment:** Evaluate the generated mesh using TurboGrid's mesh-quality statistics and configured limits.
-4. **Parameter study and automation:** Change one meshing parameter at a time, regenerate the mesh, and export comparative statistics using PyTurboGrid.
+1. **Geometry Modeling:** Define the meridional flow path, blade-angle distribution, and thickness distribution using ANSYS BladeGen.
+2. **Mesh Generation:** Transfer the blade geometry to ANSYS TurboGrid and generate a structured hexahedral mesh using Automatic Topology and Meshing (ATM).
+3. **Mesh Quality Assessment:** Evaluate the mesh using TurboGrid quality statistics and configured quality limits.
+4. **Parameter Study and Automation:** Modify selected meshing parameters, regenerate the mesh, and extract comparative statistics using PyTurboGrid.
 
-### Software environment
+### Software Environment
 
-| Software / tool | Version or role |
+| Software / Tool | Version / Role |
 |---|---|
-| ANSYS Workbench, BladeGen, TurboGrid | 2026 R1 Student |
+| ANSYS Workbench | 2026 R1 Student |
+| ANSYS BladeGen | 2026 R1 |
+| ANSYS TurboGrid | 2026 R1 |
 | Python | 3.11 |
 | PyTurboGrid (`ansys-turbogrid-core`) | 0.9.4 |
-| Microsoft Excel | Comparison workbook |
+| Microsoft Excel | Mesh-quality comparison |
+
+---
 
 ## 2. Rotor Geometry
 
-The initial BladeGen model uses the following **illustrative design parameters**:
+The initial axial compressor rotor geometry was created using ANSYS BladeGen.
+
+### Geometric Parameters
 
 | Parameter | Value |
 |---|---:|
-| Machine type | Axial compressor rotor |
+| Machine type | Axial Compressor Rotor |
 | Number of rotor blades | 24 |
 | Hub radius | 100 mm |
 | Shroud radius | 150 mm |
@@ -36,48 +49,80 @@ The initial BladeGen model uses the following **illustrative design parameters**
 | Blade axial extent | 45 mm |
 | Angular pitch | 15° |
 
-The geometric model is intended for learning and mesh-generation assessment; its aerodynamic performance has not been validated.
+The geometry was developed as an illustrative configuration for learning and evaluating the blade modeling and meshing workflow.
 
-![BladeGen rotor geometry](figures/rotor_3d.png)
+Aerodynamic performance has not been validated.
+
+![BladeGen Rotor Geometry](figures/rotor_3d.png)
 
 *Figure 1. Rotor blade geometry created in ANSYS BladeGen.*
 
+---
+
 ## 3. Structured Mesh Generation
 
-TurboGrid was used to generate a structured hexahedral mesh for **one blade-to-blade flow passage**, including inlet, outlet, and blade-passage regions. The baseline mesh contains:
+ANSYS TurboGrid was used to generate a structured hexahedral mesh for a single blade-to-blade flow passage.
 
-| Baseline mesh quantity | Count |
+The computational domain includes the inlet, outlet, and blade-passage regions.
+
+Automatic Topology and Meshing (ATM) was used to construct the mesh topology and control the mesh distribution.
+
+### 3.1. Baseline Mesh
+
+| Mesh Quantity | Value |
 |---|---:|
-| Nodes | 223,857 |
-| Elements | 205,244 |
+| Total Nodes | 223,857 |
+| Total Elements | 205,244 |
+| Mesh Type | Structured Hexahedral |
+| Computational Domain | Single Blade Passage |
+| Meshing Software | ANSYS TurboGrid 2026 R1 |
 
-![Three-dimensional blade-passage mesh](figures/mesh_3d.png)
+![Three-Dimensional Passage Mesh](figures/mesh_3d.png)
 
-*Figure 2. Three-dimensional blade-passage mesh generated in TurboGrid.*
+*Figure 2. Three-dimensional structured blade-passage mesh generated in TurboGrid.*
 
-### Mesh sections
+### 3.2. Mesh Cross-Sections
+
+The mesh was examined at three spanwise locations to assess its distribution across the blade height.
 
 | Hub | Midspan | Tip |
 |---|---|---|
-| ![Hub mesh](figures/mesh_hub.png) | ![Midspan mesh](figures/mesh_midspan.png) | ![Tip mesh](figures/mesh_tip.png) |
+| ![Hub Mesh](figures/mesh_hub.png) | ![Midspan Mesh](figures/mesh_midspan.png) | ![Tip Mesh](figures/mesh_tip.png) |
 
 *Figure 3. Blade-to-blade mesh sections near the hub, midspan, and tip.*
 
-### Local mesh details
+### 3.3. Local Mesh Structure
 
-| Leading edge | Trailing edge |
+Additional visual inspections were performed around the leading edge (LE) and trailing edge (TE).
+
+These regions are important because blade curvature and local geometric constraints can influence element shape and mesh distribution.
+
+| Leading Edge | Trailing Edge |
 |---|---|
-| ![Leading-edge mesh](figures/mesh_le.png) | ![Trailing-edge mesh](figures/mesh_te.png) |
+| ![Leading Edge Mesh](figures/mesh_le.png) | ![Trailing Edge Mesh](figures/mesh_te.png) |
 
-*Figure 4. Local mesh structures around the leading and trailing edges.*
+*Figure 4. Local structured mesh distributions around the leading and trailing edges.*
+
+---
 
 ## 4. Mesh Quality Assessment
 
-Mesh quality was assessed for all domains using the following metrics: Orthogonality Angle, Minimum Face Angle, Maximum Face Angle, Edge Length Ratio, Element Volume Ratio, Minimum Volume, Connectivity Number, and Skewness.
+Mesh quality was evaluated using the following geometric metrics:
 
-Selected **baseline** values are listed below. Angles and volume are expressed in the units used for reporting here; the exported PyTurboGrid CSV files may display angles in radians and volume in cm³.
+- Orthogonality Angle
+- Minimum Face Angle
+- Maximum Face Angle
+- Edge Length Ratio
+- Element Volume Ratio
+- Minimum Volume
+- Connectivity Number
+- Skewness
 
-| Metric | Baseline value |
+The analysis was performed for all mesh domains using TurboGrid Mesh Statistics.
+
+### 4.1. Baseline Mesh Statistics
+
+| Mesh Quality Metric | Baseline Value |
 |---|---:|
 | Orthogonality Angle | 37.9389° |
 | Minimum Face Angle | 35.1806° |
@@ -88,13 +133,39 @@ Selected **baseline** values are listed below. Angles and volume are expressed i
 | Maximum Connectivity Number | 10 |
 | Maximum Skewness | 0.609138 |
 
-For the configured TurboGrid mesh-quality limits, all five configurations reported **0% Bad** in the exported statistics. The `% ok` category is an intermediate quality classification, distinct from `% Bad` and `% OK`. These classifications do not by themselves establish the accuracy of a CFD solution.
+Angles and volume are expressed in degrees and cubic meters in this table. The exported PyTurboGrid CSV files may contain values in radians and cubic centimeters.
+
+### 4.2. Mesh Quality Classification
+
+TurboGrid classifies elements according to the configured mesh-quality limits:
+
+- **% Bad:** Percentage classified as unacceptable.
+- **% ok:** Percentage in the intermediate quality category.
+- **% OK:** Percentage satisfying the preferred quality range.
+
+All five configurations reported **0% Bad** across the evaluated metrics under the configured TurboGrid limits.
+
+This result indicates that the generated meshes satisfy the selected geometric quality limits. It does not establish CFD accuracy or numerical mesh independence.
+
+---
 
 ## 5. Meshing Parameter Study
 
-Four configurations were compared with the baseline. **Each run changes one setting relative to the baseline**.
+A parameter study was conducted to investigate the influence of selected mesh-generation settings on geometric mesh quality.
 
-| Configuration | Spanwise-to-B2B count factor | Boundary-layer factor base | Target maximum expansion rate |
+Five configurations were evaluated:
+
+- Baseline
+- Run 1
+- Run 2
+- Run 3
+- Run 4
+
+Each experimental run modifies one parameter relative to the baseline configuration.
+
+### 5.1. Experimental Configurations
+
+| Configuration | Spanwise-to-B2B Count Factor | Boundary-Layer Factor Base | Target Maximum Expansion Rate |
 |---|---:|---:|---:|
 | Baseline | 1.00 | 3.0 | 1.30 |
 | Run 1 | 1.15 | 3.0 | 1.30 |
@@ -102,13 +173,17 @@ Four configurations were compared with the baseline. **Each run changes one sett
 | Run 3 | 1.00 | 3.3 | 1.30 |
 | Run 4 | 1.00 | 3.0 | 1.25 |
 
-The first parameter corresponds to the ATM spanwise-to-blade-to-blade count factor in the saved TurboGrid states; it influences the spanwise mesh resolution. The other two parameters control boundary-layer refinement and the target rate of cell-size growth.
+The spanwise-to-blade-to-blade count factor controls the relative mesh resolution in the spanwise direction.
 
-### Comparative results
+The boundary-layer factor base affects refinement near solid surfaces.
 
-The following data were exported from the five TurboGrid states:
+The target maximum expansion rate influences the intended growth rate of neighboring mesh elements.
 
-| Configuration | Orthogonality `% ok` | Connectivity `% ok` | Max. Edge Length Ratio |
+### 5.2. Comparative Mesh Quality Results
+
+The following statistics were extracted from the five TurboGrid configurations.
+
+| Configuration | Orthogonality (% ok) | Connectivity (% ok) | Maximum Edge Length Ratio |
 |---|---:|---:|---:|
 | Baseline | 0.327441% | 0.044671% | 200.302 |
 | Run 1 | 0.309938% | 0.045321% | 171.599 |
@@ -116,65 +191,200 @@ The following data were exported from the five TurboGrid states:
 | Run 3 | 0.305818% | **0.043440%** | 232.031 |
 | Run 4 | 0.335912% | 0.045640% | 201.512 |
 
-**Observations**
+### 5.3. Results and Discussion
 
-- **Run 2** produced the lowest proportion of elements in the intermediate orthogonality category and the lowest maximum Edge Length Ratio of the five cases. Relative to the baseline, these values decreased by approximately **9.0%** and **31.4%**, respectively.
-- **Run 3** produced the lowest intermediate-category proportion for Connectivity Number, although its maximum Edge Length Ratio increased.
-- **Run 4** did not improve the reported orthogonality or connectivity percentages relative to the baseline.
+**Run 1 — Increased Spanwise Resolution**
 
-The comparison shows sensitivity to selected mesh-generation parameters, **not a universally optimal mesh**. Element counts and CFD-solution convergence would be needed to assess computational cost and numerical independence.
+Increasing the spanwise-to-B2B count factor from 1.00 to 1.15 reduced the intermediate-category orthogonality percentage and maximum Edge Length Ratio.
 
-The complete exported data and comparison workbook are available in [`results/`](results/):
+**Run 2 — Further Increased Spanwise Resolution**
 
-[Download mesh-quality comparison workbook](results/Axial_Compressor_Rotor_mesh_quality_comparison.xlsx)
+Increasing the spanwise-to-B2B count factor to 1.30 produced the lowest intermediate-category orthogonality percentage and the lowest maximum Edge Length Ratio among the five configurations.
+
+Relative to the baseline:
+
+- Orthogonality `% ok` decreased by approximately 9.0%.
+- Maximum Edge Length Ratio decreased by approximately 31.4%.
+
+However, the intermediate-category Connectivity percentage increased slightly.
+
+**Run 3 — Boundary-Layer Refinement**
+
+Increasing the boundary-layer factor base from 3.0 to 3.3 produced the lowest intermediate-category Connectivity percentage.
+
+However, the maximum Edge Length Ratio increased from 200.302 to 232.031.
+
+**Run 4 — Reduced Expansion Rate**
+
+Reducing the target maximum expansion rate from 1.30 to 1.25 did not improve the intermediate-category Orthogonality or Connectivity percentages relative to the baseline.
+
+### 5.4. Interpretation
+
+Among the evaluated configurations, Run 2 provides the most favorable results for the selected Orthogonality classification and maximum Edge Length Ratio.
+
+Run 3 produces the lowest intermediate-category Connectivity percentage.
+
+These observations indicate that meshing parameters can affect different quality metrics in different ways.
+
+The results do not establish a universally optimal mesh.
+
+A more complete optimization would also consider the number of elements, computational cost, local mesh-quality distributions, and CFD solution convergence.
+
+The complete statistical results and Excel comparison workbook are available in the [`results/`](results/) directory.
+
+[Download Mesh Quality Comparison Workbook](results/Axial_Compressor_Rotor_mesh_quality_comparison.xlsx)
+
+---
 
 ## 6. Python Automation
 
-PyTurboGrid automates loading the saved `.tst` configurations, triggering mesh generation, collecting mesh statistics, and exporting individual CSV files.
+PyTurboGrid was used to automate mesh generation and mesh-quality statistics extraction.
 
-### Requirements
+The automated workflow consists of:
 
-- ANSYS TurboGrid 2026 R1 installed locally, with a compatible license
+1. Load a TurboGrid state file.
+2. Generate the mesh.
+3. Extract mesh-quality statistics.
+4. Export the statistics to CSV.
+5. Repeat for all available mesh configurations.
+
+The Python scripts are stored in [`scripts/`](scripts/).
+
+### 6.1. Requirements
+
+The following environment was used:
+
+- ANSYS TurboGrid 2026 R1
 - Python 3.11
-- The Python dependency listed in [`requirements.txt`](requirements.txt)
-- Access to the referenced blade geometry files
+- PyTurboGrid 0.9.4
+- A compatible ANSYS license
 
-### Run the analysis
+TurboGrid must be installed locally.
 
-Clone or download this repository, then open a terminal **in the repository root**, where `requirements.txt` is located.
+### 6.2. Installation
+
+Clone or download this repository and open PowerShell in the repository root directory.
+
+Install the required Python dependency:
 
 ```powershell
 python -m pip install -r requirements.txt
+```
+
+### 6.3. Running the Analysis
+
+Run the mesh statistics extraction script:
+
+```powershell
 python scripts/export_stats.py
 ```
 
-The script processes each `.tst` file in `states/` and writes a corresponding statistics CSV into `results/`.
+The script automatically searches the `states/` directory for `.tst` files, processes each configuration, and writes the resulting CSV files to `results/`.
 
-**Reproducibility note:** Some TurboGrid state files retain absolute geometry paths from the original Windows workstation. On another machine or after moving the repository, the referenced `.curve` and `.inf` files may need to be relinked in TurboGrid before regenerating the meshes. These geometry-support files are included in [`states/`](states/). Successful execution on a different workstation has not yet been independently verified.
+### 6.4. Reproducibility Verification
+
+**Verification Date:** November 11, 2026
+
+A reproducibility execution test was performed by downloading the repository from GitHub into a separate directory on the original Windows workstation.
+
+**Test Environment**
+
+| Component | Configuration |
+|---|---|
+| Operating System | Windows |
+| ANSYS TurboGrid | 2026 R1 Student |
+| Python | 3.11 |
+| PyTurboGrid | 0.9.4 |
+| Source | Fresh GitHub repository download |
+
+**Verification Procedure**
+
+1. Download the repository from GitHub.
+2. Extract the project into a separate directory.
+3. Open PowerShell in the repository root directory.
+4. Install the dependencies from `requirements.txt`.
+5. Execute `python scripts/export_stats.py`.
+6. Check the output files in `results/`.
+
+**Execution Results**
+
+| Configuration | Execution Status |
+|---|---|
+| Baseline | SUCCESS |
+| Run 1 | SUCCESS |
+| Run 2 | SUCCESS |
+| Run 3 | SUCCESS |
+| Run 4 | SUCCESS |
+
+The script reported:
+
+```text
+Found 5 state files
+
+Processing: Baseline.tst
+SUCCESS
+
+Processing: Run1_PassageFactor115_stats.tst
+SUCCESS
+
+Processing: Run2_PassageFactor130_stats.tst
+SUCCESS
+
+Processing: Run3_FactorBase330_stats.tst
+SUCCESS
+
+Processing: Run4_ExpansionRate125_stats.tst
+SUCCESS
+
+All available states processed.
+```
+
+All five TurboGrid configurations were processed successfully, and five mesh-statistics CSV files were regenerated.
+
+**Verification Scope**
+
+This test confirms successful execution of the automated mesh-generation and statistics-export workflow from a fresh repository download on the original workstation.
+
+Numerical equivalence between the regenerated CSV files and the committed reference results has not yet been independently verified.
+
+Reproduction on a different workstation has not yet been tested.
+
+Some `.tst` state files contain absolute geometry paths from the original workstation. Geometry references may need to be relinked when reproducing the project in another environment.
+
+The required `.curve` and `.inf` geometry-support files are included in the `states/` directory.
+
+---
 
 ## 7. Repository Structure
 
 ```text
-.
+axial-compressor-rotor-modeling-meshing/
+│
 ├── README.md
 ├── .gitignore
 ├── requirements.txt
 ├── Axial_Compressor_Rotor_technical_report.pdf
+│
 ├── geometry/
 │   └── BG.bgd
+│
 ├── states/
 │   ├── BG.inf
 │   ├── BG_hub.curve
 │   ├── BG_profile.curve
 │   ├── BG_shroud.curve
 │   ├── Baseline.tst
-│   └── Run1–Run4 state files
+│   └── Run1-Run4 state files
+│
 ├── scripts/
 │   ├── export_baseline.py
 │   └── export_stats.py
+│
 ├── results/
-│   ├── Baseline and Run1–Run4 statistics CSV files
+│   ├── Baseline_stats.csv
+│   ├── Run1-Run4 statistics CSV files
 │   └── Axial_Compressor_Rotor_mesh_quality_comparison.xlsx
+│
 └── figures/
     ├── rotor_3d.png
     ├── mesh_3d.png
@@ -185,14 +395,51 @@ The script processes each `.tst` file in `states/` and writes a corresponding st
     └── mesh_te.png
 ```
 
+---
+
 ## 8. Limitations and Future Work
 
-This project covers **geometry modeling, structured mesh generation, and geometric mesh-quality assessment only**. No CFX/Fluent simulation, compressor pressure-ratio calculation, efficiency prediction, or CFD mesh-independence verification has been performed.
+This project focuses on geometric modeling, structured mesh generation, and mesh-quality assessment.
 
-Potential extensions include reporting element counts for every configuration, assessing near-wall resolution for a defined CFD operating condition, and performing a CFD-based grid-convergence study.
+The following analyses have not been performed:
+
+- CFD flow simulation using ANSYS CFX or Fluent.
+- Compressor pressure-ratio calculation.
+- Aerodynamic efficiency prediction.
+- Near-wall resolution verification for a specified operating condition.
+- CFD-based mesh-independence analysis.
+- Independent reproducibility verification on another workstation.
+
+Potential future developments include:
+
+1. Extracting node and element counts for each mesh configuration.
+2. Comparing mesh quality against mesh resolution and computational cost.
+3. Investigating local mesh-quality distributions near the blade surfaces.
+4. Performing CFD simulations using ANSYS CFX or Fluent.
+5. Conducting a CFD-based grid-convergence study.
+
+---
 
 ## 9. Technical Report
 
-For a fuller description of the methods, mesh-quality statistics, comparative results, and limitations, see the accompanying technical report:
+A technical report has been prepared to document the rotor geometry, structured mesh generation methodology, mesh-quality statistics, parametric study, and principal conclusions.
 
 **[Download Technical Report (PDF)](Axial_Compressor_Rotor_technical_report.pdf)**
+
+---
+
+## 10. Conclusion
+
+A simplified axial compressor rotor blade was modeled using ANSYS BladeGen, and a structured hexahedral mesh was generated for a single blade passage using ANSYS TurboGrid.
+
+Five meshing configurations were evaluated to investigate the influence of selected mesh-generation parameters on geometric mesh-quality metrics.
+
+All five configurations satisfied the configured TurboGrid quality limits without elements classified as Bad.
+
+Run 2 achieved the lowest intermediate-category Orthogonality percentage and the lowest maximum Edge Length Ratio among the evaluated configurations.
+
+PyTurboGrid was successfully used to automate mesh generation and statistical data extraction. The complete five-run workflow was also executed successfully from a fresh repository download on the original workstation.
+
+The project demonstrates an integrated engineering workflow combining geometry modeling, structured meshing, mesh-quality analysis, parameter studies, and Python-based automation.
+
+The results provide a foundation for subsequent CFD simulation and numerical grid-convergence investigations.
