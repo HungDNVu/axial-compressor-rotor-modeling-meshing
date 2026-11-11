@@ -5,7 +5,7 @@ import traceback
 from ansys.turbogrid.core.launcher.launcher import launch_turbogrid
 from ansys.turbogrid.core.mesh_statistics import mesh_statistics
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 STATES = ROOT / "states"
 RESULTS = ROOT / "results"
 RESULTS.mkdir(exist_ok=True)
